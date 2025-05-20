@@ -80,4 +80,5 @@ public class Vehicle extends BaseModel{
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }

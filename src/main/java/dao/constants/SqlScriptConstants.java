@@ -84,4 +84,8 @@ public class SqlScriptConstants {
     public static final String VEHICLE_FIND_BY_NAME = """
             SELECT * FROM vehicle WHERE name = ?
             """;
+
+    public static final String RENTAL_INSERT = """
+            INSERT INTO rental (customer_id, vehicle_id, rental_type, start_date, end_date, total_price, deposit) VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
 }

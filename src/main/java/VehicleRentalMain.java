@@ -395,7 +395,7 @@ public class VehicleRentalMain {
         }
     }
 
-    private static void vehicleRent() {
+    private static void vehicleRent() throws VehicleRentalException {
         System.out.print("Araç ismini giriniz: ");
         String vehicleName = scanner.nextLine();
 
@@ -403,18 +403,22 @@ public class VehicleRentalMain {
         System.out.print("Kiralama Tipi (HOURLY, DAILY, WEEKLY, MONTHLY): ");
         RentalType rentalType = RentalType.valueOf(scanner.nextLine().toUpperCase(Locale.ENGLISH));
 
-        System.out.print("Başlangıç Tarihi (yyyy-MM-ddTHH:mm): ");
-        LocalDateTime startDate = LocalDateTime.parse(scanner.nextLine());
+        if (vehicle == null) {
+            System.out.println("Araç bulunamadı");
+        } else {
+            System.out.print("Başlangıç Tarihi (yyyy-MM-ddTHH:mm): ");
+            LocalDateTime startDate = LocalDateTime.parse(scanner.nextLine());
 
-        System.out.print("Bitiş Tarihi (yyyy-MM-ddTHH:mm): ");
-        LocalDateTime endDate = LocalDateTime.parse(scanner.nextLine());
+            System.out.print("Bitiş Tarihi (yyyy-MM-ddTHH:mm): ");
+            LocalDateTime endDate = LocalDateTime.parse(scanner.nextLine());
 
-        RentalService rentalService = new RentalService();
-        rentalService.rent(LOGINED_CUSTOMER, vehicle, rentalType, startDate, endDate);
+            RentalService rentalService = new RentalService();
+            rentalService.rent(LOGINED_CUSTOMER, vehicle, rentalType, startDate, endDate);
+        }
     }
 
 }
-}
+
 // TODO kullanıcı tipi ekle +  AGE KALDIR Birth_Date alanı ekledik
 
 

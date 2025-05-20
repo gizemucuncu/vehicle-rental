@@ -1,32 +1,43 @@
 package service;
 
+import dao.RentalDAO;
 import exception.ExceptionMessagesConstants;
 import exception.VehicleRentalException;
-import model.User;
+import model.Category;
+import model.Customer;
+import model.Rental;
 import model.Vehicle;
 import model.enums.CustomerType;
 import model.enums.RentalType;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 public class RentalService {
+    private RentalDAO rentalDAO;
+
     public void rent(Customer customer, Vehicle vehicle, RentalType rentalType, LocalDateTime startDate, LocalDateTime endDate) throws VehicleRentalException {
         if (customer.getCustomerType() == CustomerType.CORPORATE && rentalType != RentalType.MONTHLY) {
             throw new VehicleRentalException(ExceptionMessagesConstants.CORPORATE_USER_CAN_ONLY_RENT_MONTHLY);
         }
 
-        if (vehicle.getPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0) {
-            if (customer.getAge() < 30) {
+        if (vehicle.getRentPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0) {
+            int customerAge = Period.between(customer.getBirthDate(), LocalDate.now()).getYears();
+            if (customerAge < 30) {
                 throw new VehicleRentalException(ExceptionMessagesConstants.USER_NOT_ELIGIBLE_FOR_EXPENSIVE_VEHICLE);
             }
         }
 
+        Category category=vehicle.getCategory();
+
         BigDecimal rate = switch (rentalType) {
-            case HOURLY -> vehicle.getRentalRatePerHour();
-            case DAILY -> vehicle.getRentalRatePerDay();
-            case WEEKLY -> vehicle.getRentalRatePerWeek();
-            case MONTHLY -> vehicle.getRentalRatePerMonth();
+            case HOURLY -> category.getRentalRatePerHour();
+            case DAILY -> category.getRentalRatePerDay();
+            case WEEKLY -> category.getRentalRatePerWeek();
+            case MONTHLY -> category.getRentalRatePerMonth();
         };
 
         long duration = switch (rentalType) {
@@ -37,8 +48,8 @@ public class RentalService {
         };
 
         BigDecimal total = rate.multiply(BigDecimal.valueOf(duration));
-        BigDecimal deposit = vehicle.getPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0
-                ? vehicle.getPrice().multiply(BigDecimal.valueOf(0.10))
+        BigDecimal deposit = vehicle.getRentPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0
+                ? vehicle.getRentPrice().multiply(BigDecimal.valueOf(0.10))
                 : BigDecimal.ZERO;
 
         Rental rental = new Rental();
@@ -48,7 +59,6 @@ public class RentalService {
         rental.setStartDate(startDate);
         rental.setEndDate(endDate);
         rental.setTotalPrice(total);
-        rental.setDeposit(deposit);
 
         rentalDAO.save(rental);
         System.out.println("Kiralama tamamlandı: ₺" + total + " | Depozito: ₺" + deposit);
