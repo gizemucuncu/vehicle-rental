@@ -8,20 +8,22 @@ public class Customer extends BaseModel {
 
     private String name;
     private String email;
-    private String password; // TODO hashlenmeli
+    private String password;
     private CustomerType customerType;
-    private int age;
     private LocalDate birthDate;
 
     public Customer() {
     }
 
-    public Customer(String name, String email, String password, CustomerType customerType, int age, LocalDate birthDate) {
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public Customer(String name, String email, String password, CustomerType customerType, LocalDate birthDate) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.customerType= customerType;
-        this.age=age;
         this.birthDate=birthDate;
     }
 
@@ -58,14 +60,6 @@ public class Customer extends BaseModel {
         this.customerType = customerType;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -74,4 +68,13 @@ public class Customer extends BaseModel {
         this.birthDate = birthDate;
     }
 
+    @Override
+    public String toString() {
+        return "Customer { " +
+                " name=' " + name + '\'' +
+                " email=' " + email + '\'' +
+                " customerType= " + customerType + '\'' +
+                " birthDate= " + birthDate + '\'' +
+                '}';
+    }
 }

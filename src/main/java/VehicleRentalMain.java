@@ -1,15 +1,11 @@
 import exception.ExceptionMessagesConstants;
 import exception.VehicleRentalException;
-import model.Category;
-import model.Customer;
-import model.User;
-import model.Vehicle;
+import model.*;
 import model.enums.CustomerType;
 import model.enums.RentalType;
 import model.enums.Role;
 import service.*;
 
-import javax.xml.transform.Source;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,6 +23,7 @@ public class VehicleRentalMain {
     private static final UserService userService = new UserService();
     private static final CategoryService categoryService = new CategoryService();
     private static final VehicleService vehicleService = new VehicleService();
+    private static final RentalService rentalService = new RentalService();
 
 
     public static void main(String[] args) {
@@ -96,11 +93,9 @@ public class VehicleRentalMain {
         String birthDateStr = scanner.nextLine();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);
-        System.out.print("Yaş Bilgisi Giriniz: ");
-        int age = scanner.nextInt();
 
         CustomerService customerService = new CustomerService();
-        customerService.save(name, email, password, customerType, age, birthDate);
+        customerService.save(name, email, password, customerType, birthDate);
     }
 
     private static void getUserMenu() throws VehicleRentalException {
@@ -165,11 +160,11 @@ public class VehicleRentalMain {
                 System.out.println("1 - Kategori Oluştur");
                 System.out.println("2 - Kategori Listele");
                 System.out.println("3 - Kategori Sil");
-                System.out.println("4 - Ürün Oluştur");
-                System.out.println("5 - Ürün Listele");
-                System.out.println("6 - Ürün Sil");
-                System.out.println("7 - Ürün Arama");
-                System.out.println("8 - Ürün Filtereleme(Kategori Bazlı)");
+                System.out.println("4 - Araç Ekle");
+                System.out.println("5 - Araç Listele");
+                System.out.println("6 - Araç Sil");
+                System.out.println("7 - Araç Arama");
+                System.out.println("8 - Araç Filtereleme(Kategori Bazlı)");
                 System.out.println("9 - Kiralanmış Araçları Listele");
                 System.out.println("0 - Geri");
                 System.out.print("Seçim Yapınız: ");
@@ -214,28 +209,17 @@ public class VehicleRentalMain {
     }
 
     private static void rentalVehicleList() {
-        /*List<Order> orders = orderService.getAllByCustomer(LOGINED_CUSTOMER);
+        RentalService rentalService = new RentalService();
+        List<Rental> rentals = rentalService.getAllRentals();
 
-        System.out.println("--------------Siparişlerim----------------");
-
-        for (Order order : orders) {
-
-            System.out.printf("Sipariş #%d - %s\n",
-                    order.getId(), order.getOrderDate());
-
-            for (OrderItem item : order.getOrderItems()) {
-
-                System.out.printf("  -> %s - %d - %s\n",
-                        item.getProduct().getName(),
-                        item.getQuantity(),
-                        item.getPrice());
+        if (rentals.isEmpty()) {
+            System.out.println("Kayıtlı hiç kiralama yok.");
+        } else {
+            System.out.println("=== TÜM ARAÇ KİRALAMA GEÇMİŞİ ===");
+            for (Rental rental : rentals) {
+                System.out.println(rental);
             }
         }
-
-
-        System.out.println("--------------------------------------------");
-
-         */
     }
 
     private static void vehicleFiltering() {
@@ -247,7 +231,7 @@ public class VehicleRentalMain {
         System.out.println("\n<====> ARAÇ LİSTESİ (Filtereme Sonucu) <====>");
 
         vehicles.forEach(vehicle ->
-                System.out.printf("Araç: %s - Ücret: %s - Kategori: %s\n", vehicle.getName(), vehicle.getRentPrice(), vehicle.getCategory().getName())
+                System.out.printf("Araç: %s - Ücret: %s - Kategori: %s\n", vehicle.getName(), vehicle.getPrice(), vehicle.getCategory().getName())
         );
 
         System.out.println("<=======================>");
@@ -263,7 +247,7 @@ public class VehicleRentalMain {
         System.out.println("\n<====> ARAÇ LİSTESİ (Arama Sonucu) <====>");
 
         vehicles.forEach(vehicle ->
-                System.out.printf("Araç: %s - Ücret: %s - Kategori: %s\n", vehicle.getName(), vehicle.getRentPrice(), vehicle.getCategory().getName())
+                System.out.printf("Araç: %s - Ücret: %s - Kategori: %s\n", vehicle.getName(), vehicle.getPrice(), vehicle.getCategory().getName())
         );
 
         System.out.println("<=======================>");
@@ -282,7 +266,7 @@ public class VehicleRentalMain {
         do {
             List<Vehicle> vehicles = vehicleService.getAll(page);
             System.out.println("\n==== ÜRÜN LİSTESİ(Sayfa )" + page + "/" + totalPage + "====");
-            vehicles.forEach(vehicle -> System.out.printf("%s - %s - %s\n", vehicle.getName(), vehicle.getRentPrice(), vehicle.getCategory().getName()));
+            vehicles.forEach(vehicle -> System.out.printf("%s - %s - %s\n", vehicle.getName(), vehicle.getPrice(), vehicle.getCategory().getName()));
             System.out.println("======");
 
             System.out.print("Sonraki sayfa sayısı: ");
@@ -322,7 +306,19 @@ public class VehicleRentalMain {
     }
 
     private static void createCategory() throws VehicleRentalException {
-        throw new VehicleRentalException("Kategori Yaratılamadı"); // TODO Böyle mi olmalı bu ?
+        System.out.println("Kategori ismi girin: ");
+        String categoryName = scanner.nextLine();
+        System.out.println("Araç kiralama fiyatı girin (Saatlik): ");
+        BigDecimal perHour = scanner.nextBigDecimal();
+        System.out.println("Araç kiralama fiyatı girin (Günlük): ");
+        BigDecimal perDay = scanner.nextBigDecimal();
+        System.out.println("Araç kiralama fiyatı girin (Haftalık): ");
+        BigDecimal perWeek = scanner.nextBigDecimal();
+        System.out.println("Araç kiralama fiyatı girin (Aylık): ");
+        BigDecimal perMonth = scanner.nextBigDecimal();
+
+        Category category = new Category(categoryName, perHour, perDay, perWeek, perMonth);
+        categoryService.save(category, LOGINED_USER);
     }
 
     private static void getMainMenu() {
@@ -382,17 +378,21 @@ public class VehicleRentalMain {
                 case "4":
                     vehicleRent();
                     break;
-                /*case "5":
+                case "5":
                     showRentalHistory();
                     break;
-
-                 */
                 case "0":
                     return;
                 default:
                     System.out.println("Geçersiz Seçim");
             }
         }
+    }
+
+    private static void showRentalHistory() {
+        System.out.println("Kiralama Geçmişiniz: ");
+        rentalService.showRentHistory(LOGINED_CUSTOMER);
+
     }
 
     private static void vehicleRent() throws VehicleRentalException {
@@ -416,16 +416,7 @@ public class VehicleRentalMain {
             rentalService.rent(LOGINED_CUSTOMER, vehicle, rentalType, startDate, endDate);
         }
     }
-/*
-Seçim Yapınız: 4
-Araç ismini giriniz: Z-Motosiklet
-Kiralama Tipi (HOURLY, DAILY, WEEKLY, MONTHLY): Daily
-Başlangıç Tarihini (yyyy-MM-ddTHH:mm) Formatı ile Giriniz: 2025-05-21T10:00
-Bitiş Tarihini (yyyy-MM-ddTHH:mm) Formatı ile Giriniz: 2025-05-23T10:00
-Kiralama tamamlandı: ₺1400.00 | Depozito: ₺210000.000
- */
 }
 
-// TODO kullanıcı tipi ekle +  AGE KALDIR Birth_Date alanı ekledik
 
 

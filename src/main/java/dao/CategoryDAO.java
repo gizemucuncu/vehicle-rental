@@ -11,9 +11,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO implements BaseDAO {
+public class CategoryDAO implements BaseDAO<Category> {
+
     @Override
-    public long save(Object o) {
+    public long save(Category category) {
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(SqlScriptConstants.CATEGORY_SAVE)) {
+
+            ps.setString(1, category.getName());
+            ps.setBigDecimal(2, category.getRentalRatePerHour());
+            ps.setBigDecimal(3, category.getRentalRatePerDay());
+            ps.setBigDecimal(4, category.getRentalRatePerWeek());
+            ps.setBigDecimal(5, category.getRentalRatePerMonth());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
@@ -53,7 +67,7 @@ public class CategoryDAO implements BaseDAO {
     }
 
     @Override
-    public void update(Object o) {
+    public void update(Category category) {
 
     }
 

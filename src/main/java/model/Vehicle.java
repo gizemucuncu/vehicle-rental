@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class Vehicle extends BaseModel{
 
     private String name;
-    private BigDecimal rentPrice;
+    private BigDecimal price;
     private int stock;
     private Category category;
 
@@ -24,27 +24,27 @@ public class Vehicle extends BaseModel{
     public Vehicle(Long id, String name, BigDecimal rentPrice) {
         this.setId(id);
         this.name = name;
-        this.rentPrice = rentPrice;
+        this.price = rentPrice;
     }
 
     public Vehicle(Long id, String name, BigDecimal rentPrice, int stock) {
         this.setId(id);
         this.name = name;
-        this.rentPrice = rentPrice;
+        this.price = rentPrice;
         this.stock = stock;
     }
 
     public Vehicle(Long id, String name, BigDecimal rentPrice, int stock, Category category) {
         this.setId(id);
         this.name = name;
-        this.rentPrice = rentPrice;
+        this.price = rentPrice;
         this.stock = stock;
         this.category = category;
     }
 
     public Vehicle(String name, BigDecimal rentPrice, int stock, Category category) {
         this.name = name;
-        this.rentPrice = rentPrice;
+        this.price = rentPrice;
         this.stock = stock;
         this.category = category;
     }
@@ -57,12 +57,12 @@ public class Vehicle extends BaseModel{
         this.name = name;
     }
 
-    public BigDecimal getRentPrice() {
-        return rentPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setRentPrice(BigDecimal rentPrice) {
-        this.rentPrice = rentPrice;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public int getStock() {
@@ -81,4 +81,12 @@ public class Vehicle extends BaseModel{
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "Vehicle { " +
+                " name= '" + name + '\'' +
+                " price= " + price +  '\'' +
+                " category= " + category +  '\'' +
+                '}';
+    }
 }

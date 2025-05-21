@@ -4,7 +4,11 @@ import dao.CategoryDAO;
 import exception.ExceptionMessagesConstants;
 import exception.VehicleRentalException;
 import model.Category;
+import model.User;
+import model.Vehicle;
+import model.enums.Role;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CategoryService {
@@ -33,4 +37,17 @@ public class CategoryService {
         return foundCategory;
 
     }
+
+    public void save(Category category, User loginUser) throws VehicleRentalException {
+        if (!Role.ADMIN.equals(loginUser.getRole())) {
+            throw new VehicleRentalException(ExceptionMessagesConstants.USER_IS_NOT_ADMIN);
+        }
+        category.setCreatedUser(loginUser);
+        category.setUpdatedUser(loginUser);
+
+        categoryDAO.save(category);
+        System.out.println("Kategori Başarıyla Kaydedildi!");
+    }
+
 }
+

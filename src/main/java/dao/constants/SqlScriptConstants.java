@@ -13,7 +13,7 @@ public class SqlScriptConstants {
             """;
 
     public static final String CUSTOMER_SAVE = """
-            INSERT INTO customer (name,email, password, customer_type, age, birth_date) VALUES (?,?,?,?,?,?)
+            INSERT INTO customer (name,email, password, customer_type, birth_date) VALUES (?,?,?,?,?)
             """;
 
     public static final String CUSTOMER_FIND_BY_ID = """
@@ -37,13 +37,13 @@ public class SqlScriptConstants {
             SELECT * FROM category WHERE id = ?
             """;
     public static final String VEHICLE_SAVE = """
-            INSERT INTO vehicle (name, rent_price, stock, category_id, created_by, updated_by)
+            INSERT INTO vehicle (name, price, stock, category_id, created_by, updated_by)
             VALUES (?,?,?,?,?,?)
             """;
     public static final String VEHICLE_FIND_ALL = """
             SELECT v.id    as id,
                    v.name  as name,
-                   v.rent_price as rent_price,
+                   v.price as price,
                    v.stock as stock,
                    c.id    as category_id,
                    c.name  as category_name
@@ -62,7 +62,7 @@ public class SqlScriptConstants {
     public static final String VEHICLE_SEARCH_BY_NAME = """
              SELECT v.id    as id,
                    v.name  as name,
-                   v.rent_price as rent_price,
+                   v.price as price,
                    v.stock as stock,
                    c.id    as category_id,
                    c.name  as category_name
@@ -73,7 +73,7 @@ public class SqlScriptConstants {
     public static final String VEHICLE_FIND_BY_CATEGORY_NAME = """
             select v.id    as id,
                    v.name  as name,
-                   v.rent_price as rent_price,
+                   v.price as price,
                    v.stock as stock,
                    c.id    as category_id,
                    c.name  as category_name
@@ -108,5 +108,52 @@ public class SqlScriptConstants {
 
     public static final String RENTAL_INSERT = """
             INSERT INTO rental (customer_id, vehicle_id, rental_type, start_date, end_date, total_price, deposit) VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
+    public static final String GET_RENTAL_HISTORY = """
+            SELECT r.rental_type,
+                      r.start_date,
+                      r.end_date,
+                      r.total_price,
+                      r.deposit,
+                      v.name AS vehicle_name,
+                      c.name AS category_name,
+                      cu.name AS customer_name,
+                      cu.email AS email,
+                      cu.birth_date AS birth_date,
+                      cu.customer_type AS customer_type
+               FROM rental r
+               JOIN vehicle v ON r.vehicle_id = v.id
+               JOIN category c ON v.category_id = c.id
+               JOIN customer cu ON r.customer_id = cu.id
+               WHERE r.customer_id = ?
+               ORDER BY r.start_date DESC;
+            """;
+
+    public static final String GET_ALL_RENTAL_HISTORY_TO_ADMIN = """
+            SELECT r.rental_type,
+                      r.start_date,
+                      r.end_date,
+                      r.total_price,
+                      r.deposit,
+                      v.name AS vehicle_name,
+                      c.name AS category_name,
+                      cu.name AS customer_name,
+                      cu.email AS email,
+                      cu.birth_date AS birth_date,
+                      cu.customer_type AS customer_type
+               FROM rental r
+               JOIN vehicle v ON r.vehicle_id = v.id
+               JOIN category c ON v.category_id = c.id
+               JOIN customer cu ON r.customer_id = cu.id
+               ORDER BY r.start_date DESC;
+            """;
+    public static final String CATEGORY_SAVE = """
+             INSERT INTO category (
+                    name,
+                    rental_rate_per_hour,
+                    rental_rate_per_day,
+                    rental_rate_per_week,
+                    rental_rate_per_month
+                ) VALUES (?, ?, ?, ?, ?)
             """;
 }

@@ -8,7 +8,6 @@ import model.enums.CustomerType;
 import utils.PasswordUtil;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class CustomerService {
 
@@ -18,14 +17,14 @@ public class CustomerService {
         customerDAO = new CustomerDAO();
     }
 
-    public void save(String name, String email, String password, CustomerType customerType, int age, LocalDate birthDate) throws VehicleRentalException {
+    public void save(String name, String email, String password, CustomerType customerType, LocalDate birthDate) throws VehicleRentalException {
 
         boolean isExist = customerDAO.existByEmail(email);
         if(isExist){
             throw new VehicleRentalException(ExceptionMessagesConstants.CUSTOMER_EMAIL_ALREADY_EXISTS);
         }
 
-        Customer customer = new Customer(name, email, PasswordUtil.hash(password), customerType, age, birthDate);
+        Customer customer = new Customer(name, email, PasswordUtil.hash(password), customerType, birthDate);
         customerDAO.save(customer);
         System.out.println("Kayıt Başarılı");
     }

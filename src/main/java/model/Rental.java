@@ -97,4 +97,16 @@ public class Rental extends BaseModel {
     public void setDeposit(BigDecimal deposit) {
         this.deposit = deposit;
     }
+
+    @Override
+    public String toString() {
+        return "Rental History: " + '\n' +
+                "-> customer= " + customer + '\n' +
+                "-> vehicle= " + vehicle + '\n' +
+                "-> rental type= " + rentalType + '\n' +
+                "-> start date= " + startDate + '\n' +
+                "-> end date= " + endDate + '\n' +
+                "-> total price= " + totalPrice + '\n' +
+                "-> deposit= " + deposit + '\n';
+    }
 }

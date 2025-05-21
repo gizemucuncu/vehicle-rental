@@ -1,5 +1,6 @@
 package service;
 
+import dao.CategoryDAO;
 import dao.RentalDAO;
 import exception.ExceptionMessagesConstants;
 import exception.VehicleRentalException;
@@ -15,16 +16,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class RentalService {
-    private final RentalDAO rentalDAO = new RentalDAO();
+    private final RentalDAO rentalDAO;
+
+    public RentalService() {
+        this.rentalDAO = new RentalDAO();
+    }
 
     public void rent(Customer customer, Vehicle vehicle, RentalType rentalType, LocalDateTime startDate, LocalDateTime endDate) throws VehicleRentalException {
         if (customer.getCustomerType() == CustomerType.CORPORATE && rentalType != RentalType.MONTHLY) {
             throw new VehicleRentalException(ExceptionMessagesConstants.CORPORATE_USER_CAN_ONLY_RENT_MONTHLY);
         }
 
-        if (vehicle.getRentPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0) {
+        if (vehicle.getPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0) {
             if(customer.getBirthDate() != null){
                 int customerAge = Period.between(customer.getBirthDate(), LocalDate.now()).getYears();
                 if (customerAge < 30) {
@@ -52,8 +58,8 @@ public class RentalService {
         };
 
         BigDecimal total = rate.multiply(BigDecimal.valueOf(duration));
-        BigDecimal deposit = vehicle.getRentPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0
-                ? vehicle.getRentPrice().multiply(BigDecimal.valueOf(0.10))
+        BigDecimal deposit = vehicle.getPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0
+                ? vehicle.getPrice().multiply(BigDecimal.valueOf(0.10))
                 : BigDecimal.ZERO;
 
         Rental rental = new Rental();
@@ -68,4 +74,12 @@ public class RentalService {
         System.out.println("Kiralama tamamlandı: ₺" + total + " | Depozito: ₺" + deposit);
     }
 
+    public void showRentHistory(Customer LOGINED_CUSTOMER){
+        rentalDAO.findAllRentHistory(LOGINED_CUSTOMER.getId());
+
+    }
+
+    public List<Rental> getAllRentals() {
+        return rentalDAO.findAllRentals();
+    }
 }

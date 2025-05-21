@@ -28,6 +28,18 @@ public class Category extends BaseModel {
         this.setUpdatedUser(updatedUser);
     }
 
+    public Category(String name,
+                    BigDecimal rentalRatePerHour,
+                    BigDecimal rentalRatePerDay,
+                    BigDecimal rentalRatePerWeek,
+                    BigDecimal rentalRatePerMonth) {
+        this.name = name;
+        this.rentalRatePerHour = rentalRatePerHour;
+        this.rentalRatePerDay = rentalRatePerDay;
+        this.rentalRatePerWeek = rentalRatePerWeek;
+        this.rentalRatePerMonth = rentalRatePerMonth;
+    }
+
     public String getName() {
         return name;
     }
@@ -71,7 +83,7 @@ public class Category extends BaseModel {
     @Override
     public String toString() {
         return "Category{" +
-                "id = '" + getId() + '\''+
+                "id = '" + getId() + '\'' +
                 "name='" + name + '\'' +
                 ", rentalRatePerHour=" + rentalRatePerHour +
                 ", rentalRatePerDay=" + rentalRatePerDay +

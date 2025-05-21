@@ -16,7 +16,7 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(SqlScriptConstants.VEHICLE_SAVE)) {
             ps.setString(1, vehicle.getName());
-            ps.setBigDecimal(2, vehicle.getRentPrice());
+            ps.setBigDecimal(2, vehicle.getPrice());
             ps.setInt(3, vehicle.getStock());
             ps.setLong(4, vehicle.getCategory().getId());
             ps.setLong(5, vehicle.getCreatedUser().getId());
@@ -74,7 +74,7 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
     private Vehicle getVehicle(ResultSet rs) throws SQLException {
         return new Vehicle(rs.getLong("id"),
                 rs.getString("name"),
-                rs.getBigDecimal("rent_price"),
+                rs.getBigDecimal("price"),
                 rs.getInt("stock"),
                 new Category(rs.getLong("category_id"), rs.getString("category_name")));
     }
@@ -153,7 +153,7 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
                 vehicle = new Vehicle(
                         rs.getLong("id"),
                         rs.getString("name"),
-                        rs.getBigDecimal("rent_price"),
+                        rs.getBigDecimal("price"),
                         rs.getInt("stock"),
                         category
                 );
@@ -177,7 +177,7 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
             while (rs.next()) {
                 vehicle = new Vehicle(rs.getLong("id"),
                         rs.getString("name"),
-                        rs.getBigDecimal("rent_price"),
+                        rs.getBigDecimal("price"),
                         rs.getInt("stock"));
 
             }

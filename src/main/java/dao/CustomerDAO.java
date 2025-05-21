@@ -2,6 +2,8 @@ package dao;
 
 import dao.constants.SqlScriptConstants;
 import model.Customer;
+import model.enums.CustomerType;
+import model.enums.Role;
 import utils.DBUtil;
 
 import java.sql.*;
@@ -20,7 +22,6 @@ public class CustomerDAO implements BaseDAO<Customer>{
             ps.setString(2, customer.getEmail());
             ps.setString(3, customer.getPassword());
             ps.setString(4, customer.getCustomerType().name());
-            ps.setInt(5, customer.getAge());
             ps.setDate(6, java.sql.Date.valueOf(customer.getBirthDate()));
 
             ps.executeUpdate();
@@ -45,6 +46,8 @@ public class CustomerDAO implements BaseDAO<Customer>{
                 customer.setEmail(rs.getString("email"));
                 customer.setCreatedDate(new Timestamp(rs.getDate("created_date").getTime()).toLocalDateTime());
                 customer.setUpdatedDate(new Timestamp(rs.getDate("updated_date").getTime()).toLocalDateTime());
+                customer.setCustomerType(CustomerType.valueOf(rs.getString("customer_type")));
+                customer.setBirthDate(rs.getDate("birth_date").toLocalDate());
             }
 
             ps.executeUpdate();
@@ -73,6 +76,7 @@ public class CustomerDAO implements BaseDAO<Customer>{
                     customer.setEmail(rs.getString("email"));
                     customer.setCreatedDate(new Timestamp(rs.getDate("created_date").getTime()).toLocalDateTime());
                     customer.setUpdatedDate(new Timestamp(rs.getDate("updated_date").getTime()).toLocalDateTime());
+                    customer.setCustomerType(CustomerType.valueOf(rs.getString("customer_type")));
                     customer.setBirthDate(rs.getDate("birth_date").toLocalDate());
                     customers.add(customer);
                 }
@@ -122,9 +126,9 @@ public class CustomerDAO implements BaseDAO<Customer>{
                 customer.setPassword(rs.getString("password"));
                 customer.setCreatedDate(new Timestamp(rs.getDate("created_date").getTime()).toLocalDateTime());
                 customer.setUpdatedDate(new Timestamp(rs.getDate("updated_date").getTime()).toLocalDateTime());
+                customer.setCustomerType(CustomerType.valueOf(rs.getString("customer_type")));
                 customer.setBirthDate(rs.getDate("birth_date").toLocalDate());
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
