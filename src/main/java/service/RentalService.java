@@ -79,7 +79,6 @@ public class RentalService {
 
     public void showRentHistory(Customer LOGINED_CUSTOMER) {
         rentalDAO.findAllRentHistory(LOGINED_CUSTOMER.getId());
-
     }
 
     public List<Rental> getAllRentals() {

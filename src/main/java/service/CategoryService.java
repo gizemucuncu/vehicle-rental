@@ -31,7 +31,6 @@ public class CategoryService {
         if (foundCategory == null) {
             throw new VehicleRentalException(ExceptionMessagesConstants.CATEGORY_NOT_FOUND);
         }
-        System.out.println("Bulunan Kategori: " + foundCategory);
         return foundCategory;
 
     }

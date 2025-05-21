@@ -276,9 +276,9 @@ public class VehicleRentalMain {
     }
 
     private static void vehicleCreate() throws VehicleRentalException {
-        System.out.println("Araç ismi girin: ");
+        System.out.print("Araç ismi girin: ");
         String vehicleName = scanner.nextLine();
-        System.out.println("Araç kiralama fiyatı girin: ");
+        System.out.print("Aracın fiyat bilgisini girin: ");
         String vehicleRentPrice = scanner.nextLine();
         System.out.print("Araç stok bilgisini giriniz: ");
         String stock = scanner.nextLine();
@@ -372,9 +372,7 @@ public class VehicleRentalMain {
     }
 
     private static void showRentalHistory() {
-        System.out.println("Kiralama Geçmişiniz: ");
         rentalService.showRentHistory(LOGINED_CUSTOMER);
-
     }
 
     private static void vehicleRent() throws VehicleRentalException {

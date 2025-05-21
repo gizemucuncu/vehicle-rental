@@ -9,7 +9,7 @@ public class DBUtil {
     private DBUtil() {
     }
 
-    private static String URL = "jdbc:postgresql://localhost:5432/test-vehicle";
+    private static String URL = "jdbc:postgresql://localhost:5432/rent-vehicle";
     private static String username = "postgres";
     private static String password = "postgres";
 

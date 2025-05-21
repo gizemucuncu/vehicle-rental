@@ -20,7 +20,7 @@ public class CustomerDAO implements BaseDAO<Customer> {
             ps.setString(2, customer.getEmail());
             ps.setString(3, customer.getPassword());
             ps.setString(4, customer.getCustomerType().name());
-            ps.setDate(6, java.sql.Date.valueOf(customer.getBirthDate()));
+            ps.setDate(5, java.sql.Date.valueOf(customer.getBirthDate()));
 
             ps.executeUpdate();
         } catch (SQLException e) {

@@ -98,9 +98,14 @@ public class RentalDAO implements BaseDAO<Rental> {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        System.out.println("Kiralama Geçmişiniz: ");
-        for (Rental rental : rentals) {
-            System.out.println(rental);
+
+        if(!rentals.isEmpty()) {
+            System.out.println("Kiralama Geçmişiniz: ");
+            for (Rental rental : rentals) {
+                System.out.println(rental);
+            }
+        } else {
+            System.out.println("Kiralama geçmişinde kayıt bulunamadı");
         }
         return rentals;
     }
