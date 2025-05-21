@@ -17,7 +17,7 @@ import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 public class RentalService {
-    private RentalDAO rentalDAO;
+    private final RentalDAO rentalDAO = new RentalDAO();
 
     public void rent(Customer customer, Vehicle vehicle, RentalType rentalType, LocalDateTime startDate, LocalDateTime endDate) throws VehicleRentalException {
         if (customer.getCustomerType() == CustomerType.CORPORATE && rentalType != RentalType.MONTHLY) {
@@ -25,9 +25,13 @@ public class RentalService {
         }
 
         if (vehicle.getRentPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0) {
-            int customerAge = Period.between(customer.getBirthDate(), LocalDate.now()).getYears();
-            if (customerAge < 30) {
-                throw new VehicleRentalException(ExceptionMessagesConstants.USER_NOT_ELIGIBLE_FOR_EXPENSIVE_VEHICLE);
+            if(customer.getBirthDate() != null){
+                int customerAge = Period.between(customer.getBirthDate(), LocalDate.now()).getYears();
+                if (customerAge < 30) {
+                    throw new VehicleRentalException(ExceptionMessagesConstants.USER_NOT_ELIGIBLE_FOR_EXPENSIVE_VEHICLE);
+                }
+            } else {
+                throw new VehicleRentalException(ExceptionMessagesConstants.CUSTOMER_BIRTH_DATE_NULL);
             }
         }
 

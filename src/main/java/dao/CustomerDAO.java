@@ -73,6 +73,7 @@ public class CustomerDAO implements BaseDAO<Customer>{
                     customer.setEmail(rs.getString("email"));
                     customer.setCreatedDate(new Timestamp(rs.getDate("created_date").getTime()).toLocalDateTime());
                     customer.setUpdatedDate(new Timestamp(rs.getDate("updated_date").getTime()).toLocalDateTime());
+                    customer.setBirthDate(rs.getDate("birth_date").toLocalDate());
                     customers.add(customer);
                 }
 
@@ -121,6 +122,7 @@ public class CustomerDAO implements BaseDAO<Customer>{
                 customer.setPassword(rs.getString("password"));
                 customer.setCreatedDate(new Timestamp(rs.getDate("created_date").getTime()).toLocalDateTime());
                 customer.setUpdatedDate(new Timestamp(rs.getDate("updated_date").getTime()).toLocalDateTime());
+                customer.setBirthDate(rs.getDate("birth_date").toLocalDate());
             }
 
         } catch (SQLException e) {

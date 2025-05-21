@@ -16,6 +16,7 @@ public class ExceptionMessagesConstants {
     public static final String CATEGORY_NOT_FOUND = "Kategori bulunamadı!";
     public static final String CORPORATE_USER_CAN_ONLY_RENT_MONTHLY = "Kurumsal (CORPORATE) kullanıcılar en az 1 aylık araç kiralayabilir!";
     public static final String USER_NOT_ELIGIBLE_FOR_EXPENSIVE_VEHICLE = "Yalnızca 30 yaşından büyük müşteriler 2.000.000 lira üzeri araç kiralayabilir!";
+    public static final String CUSTOMER_BIRTH_DATE_NULL = "Müşteri doğum tarihi bulunamadı...";
 
 
     public static final String USER_EMAIL_DOES_NOT_EXIST = "Girilen email ile bir kullanıcı bulunmamaktadır!";

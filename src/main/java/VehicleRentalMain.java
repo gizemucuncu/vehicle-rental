@@ -406,17 +406,24 @@ public class VehicleRentalMain {
         if (vehicle == null) {
             System.out.println("Araç bulunamadı");
         } else {
-            System.out.print("Başlangıç Tarihi (yyyy-MM-ddTHH:mm): ");
+            System.out.print("Başlangıç Tarihini (yyyy-MM-ddTHH:mm) Formatı ile Giriniz: ");
             LocalDateTime startDate = LocalDateTime.parse(scanner.nextLine());
 
-            System.out.print("Bitiş Tarihi (yyyy-MM-ddTHH:mm): ");
+            System.out.print("Bitiş Tarihini (yyyy-MM-ddTHH:mm) Formatı ile Giriniz: ");
             LocalDateTime endDate = LocalDateTime.parse(scanner.nextLine());
 
             RentalService rentalService = new RentalService();
             rentalService.rent(LOGINED_CUSTOMER, vehicle, rentalType, startDate, endDate);
         }
     }
-
+/*
+Seçim Yapınız: 4
+Araç ismini giriniz: Z-Motosiklet
+Kiralama Tipi (HOURLY, DAILY, WEEKLY, MONTHLY): Daily
+Başlangıç Tarihini (yyyy-MM-ddTHH:mm) Formatı ile Giriniz: 2025-05-21T10:00
+Bitiş Tarihini (yyyy-MM-ddTHH:mm) Formatı ile Giriniz: 2025-05-23T10:00
+Kiralama tamamlandı: ₺1400.00 | Depozito: ₺210000.000
+ */
 }
 
 // TODO kullanıcı tipi ekle +  AGE KALDIR Birth_Date alanı ekledik

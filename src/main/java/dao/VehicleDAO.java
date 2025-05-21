@@ -133,10 +133,43 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
     }
 
     public Vehicle findByName(String vehicleName) {
-
         Vehicle vehicle = null;
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(SqlScriptConstants.VEHICLE_FIND_BY_NAME)) {
+            ps.setString(1, vehicleName);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Category category = new Category();
+                category.setId(rs.getLong("id"));
+                category.setName(rs.getString("name"));
+                category.setRentalRatePerHour(rs.getBigDecimal("rental_rate_per_hour"));
+                category.setRentalRatePerDay(rs.getBigDecimal("rental_rate_per_day"));
+                category.setRentalRatePerWeek(rs.getBigDecimal("rental_rate_per_week"));
+                category.setRentalRatePerMonth(rs.getBigDecimal("rental_rate_per_month"));
+
+                // Vehicle oluştur ve category set et
+                vehicle = new Vehicle(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getBigDecimal("rent_price"),
+                        rs.getInt("stock"),
+                        category
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vehicle;
+    }
+
+    public Vehicle findToRentByName(String vehicleName) {
+
+        Vehicle vehicle = null;
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(SqlScriptConstants.VEHICLE_FIND_TO_RENT_BY_NAME)) {
             ps.setString(1, vehicleName);
 
             ResultSet rs = ps.executeQuery();
@@ -146,6 +179,7 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
                         rs.getString("name"),
                         rs.getBigDecimal("rent_price"),
                         rs.getInt("stock"));
+
             }
 
         } catch (SQLException e) {

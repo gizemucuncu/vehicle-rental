@@ -82,7 +82,28 @@ public class SqlScriptConstants {
             where c.name = ?
             """;
     public static final String VEHICLE_FIND_BY_NAME = """
-            SELECT * FROM vehicle WHERE name = ?
+             SELECT v.*,
+             c.id AS category_id,
+             c.name AS category_name,
+             c.rental_rate_per_hour,
+             c.rental_rate_per_day,
+            c.rental_rate_per_week,
+             c.rental_rate_per_month
+            FROM vehicle v
+             JOIN category c ON v.category_id = c.id
+             WHERE v.name = ?
+            """;
+    public static final String VEHICLE_FIND_TO_RENT_BY_NAME = """
+            SELECT v.*,
+            c.id AS category_id,
+            c.name AS category_name,
+            c.rental_rate_per_hour,
+            c.rental_rate_per_day,
+            c.rental_rate_per_week,
+            c.rental_rate_per_month
+            FROM vehicle v
+            JOIN category c ON v.category_id = c.id
+            WHERE v.name = ?
             """;
 
     public static final String RENTAL_INSERT = """

@@ -52,4 +52,10 @@ public class VehicleService {
     public Vehicle getByName(String vehicleName) {
         return vehicleDAO.findByName(vehicleName);
     }
+
+    public Vehicle getToRentByName(String vehicleName) {
+        return vehicleDAO.findToRentByName(vehicleName);
+    }
+
+
 }
