@@ -87,7 +87,7 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
             ResultSet rs = stmt.executeQuery(SqlScriptConstants.VEHICLE_TOTAL_PAGE_COUNT);
 
             if (rs.next()) {
-                int totalRows = rs.getInt(1); //17
+                int totalRows = rs.getInt(1);
                 return (int) Math.ceil((double) totalRows / VehicleRentalConstants.PAGE_SIZE);
             }
 
@@ -149,7 +149,6 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
                 category.setRentalRatePerWeek(rs.getBigDecimal("rental_rate_per_week"));
                 category.setRentalRatePerMonth(rs.getBigDecimal("rental_rate_per_month"));
 
-                // Vehicle oluştur ve category set et
                 vehicle = new Vehicle(
                         rs.getLong("id"),
                         rs.getString("name"),
@@ -157,29 +156,6 @@ public class VehicleDAO implements BaseDAO<Vehicle> {
                         rs.getInt("stock"),
                         category
                 );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return vehicle;
-    }
-
-    public Vehicle findToRentByName(String vehicleName) {
-
-        Vehicle vehicle = null;
-        try (Connection connection = DBUtil.getConnection();
-             PreparedStatement ps = connection.prepareStatement(SqlScriptConstants.VEHICLE_FIND_TO_RENT_BY_NAME)) {
-            ps.setString(1, vehicleName);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                vehicle = new Vehicle(rs.getLong("id"),
-                        rs.getString("name"),
-                        rs.getBigDecimal("price"),
-                        rs.getInt("stock"));
-
             }
 
         } catch (SQLException e) {

@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserDAO implements BaseDAO<User>{
+public class UserDAO implements BaseDAO<User> {
     @Override
     public long save(User user) {
 
@@ -28,6 +28,7 @@ public class UserDAO implements BaseDAO<User>{
         }
         return 0;
     }
+
     @Override
     public User findById(long id) {
         return null;

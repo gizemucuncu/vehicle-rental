@@ -32,7 +32,7 @@ public class VehicleService {
     }
 
     public List<Vehicle> search(String searchVehicleName) {
-        return  vehicleDAO.searchByName(searchVehicleName);
+        return vehicleDAO.searchByName(searchVehicleName);
     }
 
 
@@ -52,10 +52,5 @@ public class VehicleService {
     public Vehicle getByName(String vehicleName) {
         return vehicleDAO.findByName(vehicleName);
     }
-
-    public Vehicle getToRentByName(String vehicleName) {
-        return vehicleDAO.findToRentByName(vehicleName);
-    }
-
 
 }

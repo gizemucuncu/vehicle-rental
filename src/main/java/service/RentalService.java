@@ -31,7 +31,7 @@ public class RentalService {
         }
 
         if (vehicle.getPrice().compareTo(BigDecimal.valueOf(2_000_000)) > 0) {
-            if(customer.getBirthDate() != null){
+            if (customer.getBirthDate() != null) {
                 int customerAge = Period.between(customer.getBirthDate(), LocalDate.now()).getYears();
                 if (customerAge < 30) {
                     throw new VehicleRentalException(ExceptionMessagesConstants.USER_NOT_ELIGIBLE_FOR_EXPENSIVE_VEHICLE);
@@ -41,7 +41,7 @@ public class RentalService {
             }
         }
 
-        Category category=vehicle.getCategory();
+        Category category = vehicle.getCategory();
 
         BigDecimal rate = switch (rentalType) {
             case HOURLY -> category.getRentalRatePerHour();
@@ -69,12 +69,15 @@ public class RentalService {
         rental.setStartDate(startDate);
         rental.setEndDate(endDate);
         rental.setTotalPrice(total);
+        if (deposit != null) {
+            rental.setDeposit(deposit);
+        }
 
         rentalDAO.save(rental);
         System.out.println("Kiralama tamamlandı: ₺" + total + " | Depozito: ₺" + deposit);
     }
 
-    public void showRentHistory(Customer LOGINED_CUSTOMER){
+    public void showRentHistory(Customer LOGINED_CUSTOMER) {
         rentalDAO.findAllRentHistory(LOGINED_CUSTOMER.getId());
 
     }

@@ -101,7 +101,8 @@ public class RentalDAO implements BaseDAO<Rental> {
         System.out.println("Kiralama Geçmişiniz: ");
         for (Rental rental : rentals) {
             System.out.println(rental);
-        }        return rentals;
+        }
+        return rentals;
     }
 
     public List<Rental> findAllRentals() {

@@ -2,7 +2,7 @@ package model;
 
 import java.math.BigDecimal;
 
-public class Vehicle extends BaseModel{
+public class Vehicle extends BaseModel {
 
     private String name;
     private BigDecimal price;
@@ -85,8 +85,8 @@ public class Vehicle extends BaseModel{
     public String toString() {
         return "Vehicle { " +
                 " name= '" + name + '\'' +
-                " price= " + price +  '\'' +
-                " category= " + category +  '\'' +
+                " price= " + price + '\'' +
+                " category= " + category + '\'' +
                 '}';
     }
 }

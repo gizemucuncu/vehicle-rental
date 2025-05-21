@@ -2,7 +2,7 @@ package model;
 
 import model.enums.Role;
 
-public class User extends BaseModel{
+public class User extends BaseModel {
 
     private Long id;
     private String username;

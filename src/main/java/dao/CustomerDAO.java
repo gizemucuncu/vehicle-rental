@@ -3,15 +3,13 @@ package dao;
 import dao.constants.SqlScriptConstants;
 import model.Customer;
 import model.enums.CustomerType;
-import model.enums.Role;
 import utils.DBUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class CustomerDAO implements BaseDAO<Customer>{
+public class CustomerDAO implements BaseDAO<Customer> {
 
 
     public long save(Customer customer) {

@@ -1,10 +1,8 @@
 package model;
 
-import model.enums.CustomerType;
 import model.enums.RentalType;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Rental extends BaseModel {
@@ -16,8 +14,6 @@ public class Rental extends BaseModel {
     private LocalDateTime endDate;
     private BigDecimal totalPrice;
     private BigDecimal deposit;
-    //private List<RentalVehicle> rentalVehicleList;
-
 
     public Rental() {
     }

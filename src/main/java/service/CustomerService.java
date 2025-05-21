@@ -20,7 +20,7 @@ public class CustomerService {
     public void save(String name, String email, String password, CustomerType customerType, LocalDate birthDate) throws VehicleRentalException {
 
         boolean isExist = customerDAO.existByEmail(email);
-        if(isExist){
+        if (isExist) {
             throw new VehicleRentalException(ExceptionMessagesConstants.CUSTOMER_EMAIL_ALREADY_EXISTS);
         }
 

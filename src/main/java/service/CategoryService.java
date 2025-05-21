@@ -5,10 +5,8 @@ import exception.ExceptionMessagesConstants;
 import exception.VehicleRentalException;
 import model.Category;
 import model.User;
-import model.Vehicle;
 import model.enums.Role;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class CategoryService {

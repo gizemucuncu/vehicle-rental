@@ -25,8 +25,8 @@ public class VehicleRentalMain {
     private static final VehicleService vehicleService = new VehicleService();
     private static final RentalService rentalService = new RentalService();
 
-
     public static void main(String[] args) {
+        System.out.println("SİSTEM BAŞLADI");
         while (true) {
 
             getMainMenu();
@@ -172,7 +172,7 @@ public class VehicleRentalMain {
 
                 switch (choise) {
                     case "1":
-                        createCategory(); // TODO kayıt yapılmıyor ?
+                        createCategory();
                         break;
                     case "2":
                         categoryList();
@@ -213,9 +213,9 @@ public class VehicleRentalMain {
         List<Rental> rentals = rentalService.getAllRentals();
 
         if (rentals.isEmpty()) {
-            System.out.println("Kayıtlı hiç kiralama yok.");
+            System.out.println("Kayıtlı kiralama yok.");
         } else {
-            System.out.println("=== TÜM ARAÇ KİRALAMA GEÇMİŞİ ===");
+            System.out.println("<====> TÜM ARAÇ KİRALAMA GEÇMİŞİ <====>");
             for (Rental rental : rentals) {
                 System.out.println(rental);
             }
@@ -265,9 +265,9 @@ public class VehicleRentalMain {
 
         do {
             List<Vehicle> vehicles = vehicleService.getAll(page);
-            System.out.println("\n==== ÜRÜN LİSTESİ(Sayfa )" + page + "/" + totalPage + "====");
+            System.out.println("\n<====> ÜRÜN LİSTESİ(Sayfa )" + page + "/" + totalPage + "<====>");
             vehicles.forEach(vehicle -> System.out.printf("%s - %s - %s\n", vehicle.getName(), vehicle.getPrice(), vehicle.getCategory().getName()));
-            System.out.println("======");
+            System.out.println("<===============>");
 
             System.out.print("Sonraki sayfa sayısı: ");
             String pageStr = scanner.nextLine();
@@ -322,29 +322,12 @@ public class VehicleRentalMain {
     }
 
     private static void getMainMenu() {
-        System.out.println("=== GİRİŞ TÜRÜ SEÇİN ===");
+        System.out.println("<<<<<< GİRİŞ TÜRÜ SEÇİN >>>>>>");
         System.out.println("1 - Kullanıcı Girişi (ADMIN)");
         System.out.println("2 - Müşteri Girişi");
         System.out.println("0 - Çıkış");
         System.out.print("Seçim Yapınız: ");
     }
-
-    // TODO SİLİNECEK BU
-   /* TODO Silinecek sanırım
-    private static void saveCustomer(Scanner scanner) throws VehicleRentalException {
-        System.out.print("İsim: ");
-        String name = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.print("Şifre: ");
-        String password = scanner.nextLine();
-
-        CustomerService customerService = new CustomerService();
-        customerService.save(name, email, password);
-    }
-
-    */
-
 
     private static void loginCustomer() throws VehicleRentalException {
         System.out.print("Email: ");
@@ -358,9 +341,9 @@ public class VehicleRentalMain {
         while (true) {
             System.out.println("1 - Araç Listele");
             System.out.println("2 - Araç Arama");
-            System.out.println("3 - Araç Filtereleme(Kategori Bazlı)");
-            System.out.println("4 - Araç Kirla ");
-            System.out.println("5 - Kiralamları Görüntüle");
+            System.out.println("3 - Araç Filtereleme (Kategori Bazlı)");
+            System.out.println("4 - Araç Kirala ");
+            System.out.println("5 - Kiralama Geçmişini Görüntüle");
             System.out.println("0 - Geri");
             System.out.print("Seçim Yapınız: ");
             String choise = scanner.nextLine();

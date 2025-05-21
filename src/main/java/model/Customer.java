@@ -23,8 +23,8 @@ public class Customer extends BaseModel {
         this.name = name;
         this.password = password;
         this.email = email;
-        this.customerType= customerType;
-        this.birthDate=birthDate;
+        this.customerType = customerType;
+        this.birthDate = birthDate;
     }
 
     public String getName() {
