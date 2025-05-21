@@ -58,7 +58,15 @@ public class CategoryDAO implements BaseDAO<Category> {
              PreparedStatement ps = connection.prepareStatement(SqlScriptConstants.CATEGORY_FIND_ALL)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                categoryList.add(new Category(rs.getLong("id"), rs.getString("name")));
+                categoryList.add(
+                        new Category(rs.getLong("id"),
+                                rs.getString("name"),
+                                rs.getBigDecimal("rental_rate_per_hour"),
+                                rs.getBigDecimal("rental_rate_per_day"),
+                                rs.getBigDecimal("rental_rate_per_week"),
+                                rs.getBigDecimal("rental_rate_per_month")
+                        )
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -26,7 +26,6 @@ public class VehicleRentalMain {
     private static final RentalService rentalService = new RentalService();
 
     public static void main(String[] args) {
-        System.out.println("SİSTEM BAŞLADI");
         while (true) {
 
             getMainMenu();
